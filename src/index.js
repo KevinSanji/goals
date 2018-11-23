@@ -1,12 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import { Router, Route, browserHistory } from 'react-router';
+import { firebaseApp } from './firebase';
+import App from './components/App';
+import SignIn from './components/SignIn';
+import SignUp from './components/SignUp';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+firebaseApp.auth().onAuthStateChanged(user => {
+  if (user) {
+    console.log('a user has signed in or up', user);
+  } else {
+    console.log('a user has signed out or still needs to sign in');
+  }
+})
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+ReactDOM.render(
+  <Router path='/' history={browserHistory}>
+    <Route path='/app' component={App} />
+    <Route path='/signin' component={SignIn} />
+    <Route path='/signup' component={SignUp} />
+  </Router>, document.getElementById('root')
+)
