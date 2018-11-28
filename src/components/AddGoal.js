@@ -11,9 +11,10 @@ class AddGoal extends Component {
   }
 
   addGoal() {
-    console.log('this', this);
     const { title } = this.state;
+    // this is accessing local state
     const { email } = this.props.user;
+    // this is accessing global state from App.js as props, and then declaring object with the key 'email:' set to the value of this.props.user
     goalRef.push({email, title});
   }
 
@@ -43,6 +44,7 @@ class AddGoal extends Component {
 
 function mapStateToProps(state) {
   const { user } = state;
+  // this is setting the 'user' key to the user value of the global state object
   return {
     user
   }

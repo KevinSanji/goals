@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { firebaseApp } from '../firebase';
 import AddGoal from './AddGoal';
 import GoalList from './GoalList';
+import CompleteGoalList from './CompleteGoalList';
 
 class App extends Component {
 
@@ -14,9 +15,15 @@ class App extends Component {
     return (
       <div>
         <div>
-          <h3>Goals</h3>
+          <h3>Goals Tracker</h3>
           <AddGoal />
+          <hr/>
+          <h4>Goals</h4>
           <GoalList />
+          <hr/>
+          <h4>Complete Goals</h4>
+          <CompleteGoalList />
+          <hr/>
         </div>
         <button
           className='btn btn-danger'
@@ -30,7 +37,7 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
-  // console.log('state', state);
+  // this logs initial state, is called again as state is updated from other components
   return {}
 }
 

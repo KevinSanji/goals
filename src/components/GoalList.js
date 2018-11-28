@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { goalRef } from '../firebase';
 import { setGoals } from '../actions/';
+import GoalItem from './GoalItem';
 
 class GoalList extends Component {
   componentDidMount() {
@@ -9,7 +10,11 @@ class GoalList extends Component {
       let goals = [];
       snap.forEach(goal => {
         const { email, title } = goal.val();
-        goals.push({email, title});
+        //serverKey stores the key (random string) of the goal object returned
+        //from the firebase goal reference
+        const serverKey = goal.key;
+        goals.push({email, title, serverKey});
+        console.log('goal', goal);
       })
       console.log('goals', goals);
       this.props.setGoals(goals);
@@ -19,13 +24,22 @@ class GoalList extends Component {
   render() {
     console.log('this.props.goals', this.props.goals)
     return (
-      <div>Goal List</div>
+      <div>
+        {
+          this.props.goals.map((goal, index) => {
+            return (
+              <GoalItem key={index} goal={goal}/>
+            )
+          })
+        }
+      </div>
     )
   }
 }
 
 function mapStateToProps(state) {
   const { goals } = state;
+  // this is set as a key in initial state
   return {
     goals
   }
